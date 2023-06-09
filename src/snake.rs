@@ -16,26 +16,12 @@ pub enum Direction {
 pub struct SnakeGame {
   pub width: usize,
   pub height: usize,
-  pub snake: VecDeque<Position>, // Head first tail last 
+  pub snake: VecDeque<Position>, 
   pub direction: Direction,
   next_direction: Direction,
   pub food: Position,
   pub finished: bool,
 }
-
-impl SnakeGame {
-  pub fn new(width: usize, height: usize) -> Self {
-    Self {
-      width,
-      height,
-      snake: [((width - 3).max(0), height / 2)].into_iter().collect(),
-      direction: Direction::Left,
-      next_direction: Direction::Left,
-      food: (2.min(width - 1), height / 2),
-      finished: false,
-    }
-  }
-
 
 
   pub fn change_direction(&mut self, direction: Direction) {
@@ -44,13 +30,14 @@ impl SnakeGame {
     }
     match (self.direction, direction) {
       (Direction::Up, Direction::Up)
-      | (Direction::Up, Direction::Down)
-      | (Direction::Right, Direction::Right)
-      | (Direction::Right, Direction::Left)
-      | (Direction::Down, Direction::Up)
-      | (Direction::Down, Direction::Down)
-      | (Direction::Left, Direction::Right)
-      | (Direction::Left, Direction::Left) => {}
+      (Direction::Up, Direction::Down)
+      (Direction::Down, Direction::Up)
+     (Direction::Down, Direction::Down)
+     (Direction::Left, Direction::Right)
+     (Direction::Left, Direction::Left) 
+      (Direction::Right, Direction::Right)
+       (Direction::Right, Direction::Left)
+        => {}
       (_, direction) => self.next_direction = direction,
     }
   }
@@ -93,6 +80,19 @@ pub fn is_valid(&self, (x, y): Position) -> bool {
           self.finished = true;
           return;
         }
+        
+	impl SnakeGame {
+  pub fn new(width: usize, height: usize) -> Self {
+    Self {
+      width,
+      height,
+      snake: [((width - 3).max(0), height / 2)].into_iter().collect(),
+      direction: Direction::Left,
+      next_direction: Direction::Left,
+      food: (2.min(width - 1), height / 2),
+      finished: false,
+    }
+  }
 
         self.food = free_positions[random_range(0, free_positions.len())];
       }
