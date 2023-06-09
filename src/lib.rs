@@ -1,23 +1,21 @@
 mod random;
 mod snake;
 
-use js_sys::Function;
 use snake::{Direction, SnakeGame};
 use std::{cell::RefCell, rc::Rc};
 use wasm_bindgen::{prelude::*, JsCast, UnwrapThrowExt};
+use js_sys::Function;
 use web_sys::{window, HtmlDivElement, HtmlElement, KeyboardEvent};
+use std::rand::Rng::Rang
 
 thread_local! {
-  static GAME: Rc<RefCell<SnakeGame>> =
-    Rc::new(RefCell::new(SnakeGame::new(15, 15)));
-
+  static GAME: Rc<RefCell<SnakeGame>> = Rc::new(RefCell::new(SnakeGame::new(15, 15)));
   static HANDLE_TICK: Closure<dyn FnMut()> = Closure::wrap(Box::new(|| {
     GAME.with(|game| game.borrow_mut().tick());
     render();
   }) as Box<dyn FnMut()>);
 
-  static HANDLE_KEYDOWN: Closure<dyn FnMut(KeyboardEvent)> =
-    Closure::wrap(Box::new(|evt: KeyboardEvent| GAME.with(|game| {
+  static HANDLE_KEYDOWN: Closure<dyn FnMut(KeyboardEvent)> =Closure::wrap(Box::new(|evt: KeyboardEvent| GAME.with(|game| {
       let direction = match &evt.key()[..] {
         "ArrowUp" => Some(Direction::Up),
         "ArrowRight" => Some(Direction::Right),
