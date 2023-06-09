@@ -4,16 +4,13 @@ use std::collections::VecDeque;
 
 
 pub type Position = (usize, usize);
-
-#[derive(Debug, Clone, Copy)]
 pub enum Direction {
   Up,
   Down,
   Right
   Left,
 }
-#[derive(Debug)]
-pub struct SnakeGame {
+pub struct SnakGame {
   pub width: usize,
   pub height: usize,
   pub snake: VecDeque<Position>, 
@@ -65,7 +62,7 @@ pub fn is_valid(&self, (x, y): Position) -> bool {
     };
 
     if !self.is_valid(new_head) || self.snake.contains(&new_head) {
-      // Lose 
+
       self.finished = true;
     } else {
       if new_head != self.food {  //add non=
@@ -81,7 +78,7 @@ pub fn is_valid(&self, (x, y): Position) -> bool {
           return;
         }
         
-	impl SnakeGame {
+	impl SnakGame {
   pub fn new(width: usize, height: usize) -> Self {
     Self {
       width,
