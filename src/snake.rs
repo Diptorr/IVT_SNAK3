@@ -1,16 +1,17 @@
 use crate::random::random_range;
 use std::collections::VecDeque;
 
+
+
 pub type Position = (usize, usize);
 
 #[derive(Debug, Clone, Copy)]
 pub enum Direction {
   Up,
-  Right,
   Down,
+  Right
   Left,
 }
-
 #[derive(Debug)]
 pub struct SnakeGame {
   pub width: usize,
@@ -35,11 +36,12 @@ impl SnakeGame {
     }
   }
 
+
+
   pub fn change_direction(&mut self, direction: Direction) {
     if self.finished {
       return;
     }
-
     match (self.direction, direction) {
       (Direction::Up, Direction::Up)
       | (Direction::Up, Direction::Down)
@@ -53,15 +55,17 @@ impl SnakeGame {
     }
   }
 
-  pub fn is_valid(&self, (x, y): Position) -> bool {
-    x < self.width && y < self.height
-  }
+
 
   pub fn tick(&mut self) {
     if self.finished && self.snake.len() == 0 {
       return;
     }
 
+
+pub fn is_valid(&self, (x, y): Position) -> bool {
+    x < self.width && y < self.height
+  }
     self.direction = self.next_direction;
 
     let (x, y) = self.snake[0];
@@ -98,12 +102,3 @@ impl SnakeGame {
   }
 }
 
-#[cfg(test)]
-mod tests {
-  use super::SnakeGame;
-
-  #[test]
-  fn test() {
-    println!("{:?}", SnakeGame::new(10, 10));
-  }
-}
